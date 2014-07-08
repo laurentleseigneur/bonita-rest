@@ -35,6 +35,21 @@ public class AppModule {
         return "bpm";
     }
 
+//    @Provides
+//    @Named("platform.session")
+//    public PlatformSession getSession() {
+//    	PlatformLoginAPI platformLoginAPI;
+//    	PlatformSession session=null;
+//		try {
+//			platformLoginAPI = PlatformAPIAccessor.getPlatformLoginAPI();
+//			session = platformLoginAPI.login("platformAdmin", "platform");
+//		} catch (BonitaException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		return session;
+//    }
+    
     @Provides
     public ConfigSupplier appConfigSupplier(ConfigLoader configLoader) {
         // Load settings.properties in bonita.platform package as a set of config entries
