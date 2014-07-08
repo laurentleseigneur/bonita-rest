@@ -2,15 +2,11 @@ package bonita.platform.rest;
 
 import org.bonitasoft.engine.api.PlatformLoginAPI;
 import org.bonitasoft.engine.exception.BonitaException;
-import org.bonitasoft.engine.exception.BonitaHomeNotSetException;
-import org.bonitasoft.engine.exception.ServerAPIException;
-import org.bonitasoft.engine.exception.UnknownAPITypeException;
+import org.bonitasoft.engine.platform.Platform;
 import org.bonitasoft.engine.platform.PlatformLogoutException;
 import org.bonitasoft.engine.platform.PlatformNotFoundException;
-import org.bonitasoft.engine.platform.impl.PlatformImpl;
 import org.bonitasoft.engine.session.PlatformSession;
 import org.bonitasoft.engine.session.SessionNotFoundException;
-import org.junit.BeforeClass;
 
 import restx.annotations.GET;
 import restx.annotations.RestxResource;
@@ -22,7 +18,7 @@ import com.bonitasoft.engine.api.PlatformAPIAccessor;
 
 @Component
 @RestxResource
-public class PlateformResource {
+public class PlatformResource {
 	org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(getClass());
 	private PlatformLoginAPI platformLoginAPI;
 	private PlatformSession session;
@@ -31,16 +27,16 @@ public class PlateformResource {
 	
 	@GET("/platform")
 	@PermitAll
-	public PlatformImpl getPlatform() {
+	public Platform getPlatform() {
 		System.setProperty("bonita.home", "/home/laurent/bonita-home/");
-		PlatformImpl platform = null;
+		Platform platform = null;
 		try {
 			platformLoginAPI = PlatformAPIAccessor.getPlatformLoginAPI();
 			session = platformLoginAPI.login("platformAdmin", "platform");
 			PlatformAPI platformAPI = PlatformAPIAccessor
 					.getPlatformAPI(session);
 
-			platform = (PlatformImpl) platformAPI.getPlatform();
+			platform =  platformAPI.getPlatform();
 
 		} catch (PlatformNotFoundException e) {
 			// TODO Auto-generated catch block

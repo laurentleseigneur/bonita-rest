@@ -3,18 +3,18 @@ package bonita.platform.rest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.bonitasoft.engine.platform.impl.PlatformImpl;
+import org.bonitasoft.engine.platform.Platform;
 import org.junit.Test;
 
 
-public class PlateformResourceTest {
+public class PlatformResourceTest {
 @Test
 public void testGetPlatform() throws Exception {
 	//given
-	PlateformResource plateformResource=new PlateformResource();
+	PlatformResource plateformResource=new PlatformResource();
 	
 	//when
-	PlatformImpl plateform = plateformResource.getPlatform();
+	Platform plateform = plateformResource.getPlatform();
 	
 	//then
 	assertThat(plateform).isNotNull();
