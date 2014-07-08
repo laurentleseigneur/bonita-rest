@@ -21,7 +21,7 @@ public class TenantResourceTest extends AbstractTest {
 	public void testAllTenants() throws Exception {
 		// given
 
-		final TenantResource tenantResource = new TenantResource();
+		final TenantResource tenantResource = new TenantResource(settings);
 
 		// when
 		final List<Tenant> allTenants = tenantResource.getAllTenants();
@@ -34,7 +34,7 @@ public class TenantResourceTest extends AbstractTest {
 	public void testCreateTenant() throws Exception {
 		// given
 
-		final TenantResource tenantResource = new TenantResource();
+		final TenantResource tenantResource = new TenantResource(settings);
 
 		// when
 		final String uniqueName = NAME + UUID.randomUUID();

@@ -11,6 +11,7 @@ import restx.annotations.GET;
 import restx.annotations.RestxResource;
 import restx.factory.Component;
 import restx.security.PermitAll;
+import bonita.platform.settings.BonitaSettings;
 
 import com.bonitasoft.engine.api.PlatformAPI;
 import com.bonitasoft.engine.api.PlatformAPIAccessor;
@@ -23,6 +24,12 @@ public class PlatformResource {
 	private PlatformLoginAPI platformLoginAPI;
 
 	private PlatformSession platformSession;
+
+	public PlatformResource(BonitaSettings bonitaSettings) {
+		System.setProperty("bonita.home",
+				System.getProperty("bonita.home", bonitaSettings.bonitaHome()));
+		logger.info("using bonita home: " + System.getProperty("bonita.home"));
+	}
 
 	@GET("/platform")
 	@PermitAll
@@ -44,11 +51,9 @@ public class PlatformResource {
 			try {
 				platformLoginAPI.logout(platformSession);
 			} catch (final PlatformLogoutException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				logger.error("PlatformLogoutException", e);
 			} catch (final SessionNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				logger.error("SessionNotFoundException", e);
 			}
 		}
 

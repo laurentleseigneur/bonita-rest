@@ -21,6 +21,8 @@ import restx.annotations.RestxResource;
 import restx.factory.Component;
 import restx.security.PermitAll;
 import bonita.platform.domain.TenantCreation;
+import bonita.platform.domain.TenantUpdate;
+import bonita.platform.settings.BonitaSettings;
 
 import com.bonitasoft.engine.api.PlatformAPI;
 import com.bonitasoft.engine.api.PlatformAPIAccessor;
@@ -35,6 +37,12 @@ public class TenantResource {
 	org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(getClass());
 	private PlatformLoginAPI platformLoginAPI;
 	private PlatformSession session;
+
+	public TenantResource(BonitaSettings bonitaSettings) {
+		System.setProperty("bonita.home",
+				System.getProperty("bonita.home", bonitaSettings.bonitaHome()));
+		logger.info("using bonita home: " + System.getProperty("bonita.home"));
+	}
 
 	@GET("/tenant")
 	@PermitAll
@@ -66,11 +74,10 @@ public class TenantResource {
 		try {
 			platformLoginAPI.logout(session);
 		} catch (final PlatformLogoutException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("PlatformLogoutException", e);
+
 		} catch (final SessionNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("SessionNotFoundException", e);
 		}
 	}
 
@@ -110,7 +117,44 @@ public class TenantResource {
 	}
 
 	@PUT("/tenant/{id}")
-	public Tenant updateTenant(long id, TenantCreation tenantData) {
+	public Tenant update(long id, TenantUpdate tenantData) {
+		Tenant tenant = null;
+		final String action = tenantData.getAction();
+
+		if (action.equals("update")) {
+			tenant = updateTenant(id, tenantData);
+		} else if (action.equals("activate")) {
+			activateTenant(id);
+
+		} else if (action.equals("deactivate")) {
+			deactiveTenant(id);
+		}
+		if (tenant == null) {
+			tenant = getTenant(id);
+		}
+		return tenant;
+
+	}
+
+	/**
+	 *
+	 * @param id
+	 * @return the tenant
+	 */
+	@GET("/tenant/{id}")
+	public Tenant getTenant(long id) {
+		try {
+			final PlatformAPI platformApi = getPlatformApi();
+			return platformApi.getTenantById(id);
+		} catch (final BonitaException e) {
+			e.printStackTrace();
+		} finally {
+			logout();
+		}
+		return null;
+	}
+
+	private Tenant updateTenant(long id, TenantUpdate tenantData) {
 		final TenantUpdater updater = new TenantUpdater();
 		updater.setDescription(tenantData.getDescription());
 		updater.setName(tenantData.getName());
@@ -127,8 +171,7 @@ public class TenantResource {
 		return null;
 	}
 
-	@PUT("/tenant/{id}")
-	public void activateTenant(long id) {
+	private void activateTenant(long id) {
 		try {
 			final PlatformAPI platformApi = getPlatformApi();
 			platformApi.activateTenant(id);
@@ -140,8 +183,7 @@ public class TenantResource {
 		}
 	}
 
-	@PUT("/tenant/{id}")
-	public void deactiveTenant(long id) {
+	private void deactiveTenant(long id) {
 		try {
 			final PlatformAPI platformApi = getPlatformApi();
 			platformApi.deactiveTenant(id);
