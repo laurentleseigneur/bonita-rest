@@ -1,0 +1,11 @@
+title: Hello public 20140708 102000
+given:
+  - time: 2014-07-08T10:20:00.643+02:00
+wts:
+  - when: |
+       GET hello?who=zzzz
+       Cookie: RestxSession-bonita-platform={"_expires":"2014-08-07T10:20:00.643+02:00","principal":"admin","sessionKey":"8c307dac-05be-4714-b9cd-8457a27afad5"}; RestxSessionSignature-bonita-platform=3Wg7HFl1QtzKUCo+nf6V1LPpaPw=
+    then: |
+        {
+          "message" : "hello zzzz, it's 10:20:00"
+        }
