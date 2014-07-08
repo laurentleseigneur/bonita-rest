@@ -1,30 +1,31 @@
 ##install restx:
 
 	http://restx.io/docs/install.html
+	
+	install restx plug in
+	
+	restx>shell install
+	
+	choose all plugin
 
 ##fixing missing dependencies in private repos with restx app run:
 
 	mvn dependency:copy-dependencies
+	
+and then  compile
 
+	restx>app compile
+	restx>app run
+	 
+	
 install a 6.3.1 bundle
 
-##before run:
+## run:
 
-change bonita home path in PlateformResource 
+	mvn clean install 
 
-change bonita-client.properties (for testing)
+and then add the war in tomcat's webapps directory
+
+navigate to /bonita-rest/api/@/ui/ 
  
-
-	# LOCAL
-	#org.bonitasoft.engine.api-type = LOCAL
-	
-	# HTTP
-	org.bonitasoft.engine.api-type = HTTP
-	server.url = http://localhost:8080
-	application.name = bonita
-	
-	# Remote: EJB3 / JBoss 5
-	#org.bonitasoft.engine.api-type = EJB3
-	#java.naming.factory.initial = org.jnp.interfaces.NamingContextFactory
-	#java.naming.provider.url = jnp://localhost:1099
 

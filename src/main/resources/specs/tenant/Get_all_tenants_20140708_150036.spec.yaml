@@ -1,0 +1,18 @@
+title: Get all tenants 20140708 150036
+given:
+  - time: 2014-07-08T15:00:36.966+02:00
+wts:
+  - when: |
+       GET tenant
+       Cookie: RestxSession-bonita-platform={"_expires":"2014-08-07T15:00:36.966+02:00","principal":"admin","sessionKey":"9ffc7b54-fbd7-4b1d-bce3-5989553bfa50"}; RestxSessionSignature-bonita-platform=EQ9+gL6V0kYuWeXg4DpIds78qxw=
+    then: |
+        [ {
+          "defaultTenant" : true,
+          "iconPath" : null,
+          "iconName" : null,
+          "description" : "Default tenant",
+          "creationDate" : "2014-07-08T10:21:36.025+0000",
+          "name" : "default",
+          "id" : 1,
+          "state" : "ACTIVATED"
+        } ]

@@ -1,5 +1,5 @@
 {
-    "module": "bonita-platform:bonita-platform:0.1-SNAPSHOT",
+    "module": "com.bonitasoft:bonita-rest:0.1-SNAPSHOT",
     "packaging": "war",
 
     "properties": {

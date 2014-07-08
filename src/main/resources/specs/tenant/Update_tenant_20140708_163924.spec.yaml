@@ -1,0 +1,20 @@
+title: Update tenant 20140708 163924
+given:
+  - time: 2014-07-08T16:39:24.583+02:00
+wts:
+  - when: |
+       PUT tenant
+       Cookie: RestxSession-bonita-platform={"_expires":"2014-08-07T16:39:24.583+02:00","principal":"admin","sessionKey":"9ffc7b54-fbd7-4b1d-bce3-5989553bfa50"}; RestxSessionSignature-bonita-platform=IuktMxdTl3XsIdTQSJ/UCdAFxew=
+
+        {
+         "name":"new tenant nameaaa",
+         "description":"tenant description",
+         "username":"joe",
+         "password":"bpm",
+         "activated":false
+         }
+    then: |
+       500
+
+        UNEXPECTED SERVER ERROR:
+        null

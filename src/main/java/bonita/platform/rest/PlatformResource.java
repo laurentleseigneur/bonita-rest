@@ -27,27 +27,26 @@ public class PlatformResource {
 	@GET("/platform")
 	@PermitAll
 	public Platform getPlatform() {
-		System.setProperty("bonita.home", "/home/laurent/bonita-home/");
 		Platform platform = null;
 		try {
 			platformLoginAPI = PlatformAPIAccessor.getPlatformLoginAPI();
 			platformSession = platformLoginAPI.login("platformAdmin",
 					"platform");
-			PlatformAPI platformAPI = PlatformAPIAccessor
+			final PlatformAPI platformAPI = PlatformAPIAccessor
 					.getPlatformAPI(platformSession);
 
 			platform = platformAPI.getPlatform();
 
-		} catch (BonitaException e) {
+		} catch (final BonitaException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			try {
 				platformLoginAPI.logout(platformSession);
-			} catch (PlatformLogoutException e) {
+			} catch (final PlatformLogoutException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} catch (SessionNotFoundException e) {
+			} catch (final SessionNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
