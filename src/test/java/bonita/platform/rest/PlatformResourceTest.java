@@ -14,9 +14,9 @@ public class PlatformResourceTest extends AbstractTest {
 	public void testGetPlatform() throws Exception {
 
 		final BonitaHomeService bonitaHomeService = getBonitaHomeService();
-		PlatformSessionService platformSessionService = new PlatformSessionService(
+		final PlatformSessionService platformSessionService = new PlatformSessionService(
 				bonitaHomeService);
-		PlatformService platformService = new PlatformService(
+		final PlatformService platformService = new PlatformService(
 				platformSessionService);
 		// given
 		final PlatformResource plateformResource = new PlatformResource(
@@ -28,6 +28,6 @@ public class PlatformResourceTest extends AbstractTest {
 		// then
 		assertThat(plateform).isNotNull();
 		assertThat(plateform.getCreatedBy()).isEqualTo("platformAdmin");
-		assertThat(plateform.getVersion()).isEqualTo("6.3.2");
+		assertThat(plateform.getVersion()).isEqualTo("6.3.1");
 	}
 }

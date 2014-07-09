@@ -13,7 +13,7 @@ import com.bonitasoft.engine.api.PlatformAPIAccessor;
 @Component
 public class PlatformService {
 
-	private PlatformSessionService platformSessionService;
+	private final PlatformSessionService platformSessionService;
 
 	public PlatformService(PlatformSessionService platformSessionService) {
 		this.platformSessionService = platformSessionService;
@@ -22,17 +22,17 @@ public class PlatformService {
 
 	public PlatformAPI getPlatformAPI() {
 		try {
-			PlatformSession session = platformSessionService.getSession();
+			platformSessionService.getBonitaHomeService().initBonitaHome();
+			final PlatformSession session = platformSessionService.getSession();
 			return PlatformAPIAccessor.getPlatformAPI(session);
 
-
-		} catch (BonitaHomeNotSetException e) {
+		} catch (final BonitaHomeNotSetException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (ServerAPIException e) {
+		} catch (final ServerAPIException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (UnknownAPITypeException e) {
+		} catch (final UnknownAPITypeException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

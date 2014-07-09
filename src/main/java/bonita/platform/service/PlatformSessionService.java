@@ -18,10 +18,12 @@ public class PlatformSessionService {
 
 	private PlatformLoginAPI platformLoginAPI;
 	private PlatformSession platformSession;
-	private BonitaHomeService bonitaHomeService;
+	private final BonitaHomeService bonitaHomeService;
 
 	public PlatformSessionService(BonitaHomeService bonitaHomeService) {
 		this.bonitaHomeService = bonitaHomeService;
+		getBonitaHomeService().initBonitaHome();
+
 	}
 
 	public PlatformSession getSession() {
@@ -31,16 +33,16 @@ public class PlatformSessionService {
 			platformLoginAPI = PlatformAPIAccessor.getPlatformLoginAPI();
 			platformSession = platformLoginAPI.login("platformAdmin",
 					"platform");
-		} catch (BonitaHomeNotSetException e) {
+		} catch (final BonitaHomeNotSetException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (ServerAPIException e) {
+		} catch (final ServerAPIException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (UnknownAPITypeException e) {
+		} catch (final UnknownAPITypeException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (PlatformLoginException e) {
+		} catch (final PlatformLoginException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -50,14 +52,18 @@ public class PlatformSessionService {
 	public void logout() {
 		try {
 			platformLoginAPI.logout(platformSession);
-		} catch (PlatformLogoutException e) {
+		} catch (final PlatformLogoutException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (SessionNotFoundException e) {
+		} catch (final SessionNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
+	}
+
+	public BonitaHomeService getBonitaHomeService() {
+		return bonitaHomeService;
 	}
 
 }
