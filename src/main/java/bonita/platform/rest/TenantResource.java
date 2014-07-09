@@ -24,9 +24,17 @@ import com.bonitasoft.engine.platform.TenantUpdater;
 @Component
 @RestxResource
 public class TenantResource {
+	private static final String DEACTIVATE = "deactivated";
+
+	private static final String ACTIVATE = "activated";
+
+	private static final String UPDATE = "update";
+
+	private static final String PAUSED = "paused";
+
 	org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(getClass());
 
-	private PlatformService platformService;
+	private final PlatformService platformService;
 
 	public TenantResource(PlatformService platformService) {
 		this.platformService = platformService;
@@ -54,8 +62,7 @@ public class TenantResource {
 			final long createTenantId = platformApi.createTenant(tenantCreator);
 			return platformApi.getTenantById(createTenantId);
 		} catch (final BonitaException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+
 		}
 		return null;
 	}
@@ -66,24 +73,27 @@ public class TenantResource {
 			final PlatformAPI platformApi = platformService.getPlatformAPI();
 			platformApi.deleteTenant(id);
 		} catch (final BonitaException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("BonitaException", e);
 		}
 	}
 
 	@PUT("/tenant/{id}")
 	public Tenant update(long id, TenantUpdate tenantData) {
 		Tenant tenant = null;
-		final String action = tenantData.getAction();
-
-		if (action.equals("update")) {
-			tenant = updateTenant(id, tenantData);
-		} else if (action.equals("activate")) {
+		final String action = tenantData.getState();
+		switch (action) {
+		case ACTIVATE:
 			activateTenant(id);
-
-		} else if (action.equals("deactivate")) {
+			break;
+		case DEACTIVATE:
 			deactiveTenant(id);
+			break;
+		case UPDATE:
+		default:
+			tenant = updateTenant(id, tenantData);
+			break;
 		}
+
 		if (tenant == null) {
 			tenant = getTenant(id);
 		}
@@ -102,7 +112,8 @@ public class TenantResource {
 			final PlatformAPI platformApi = platformService.getPlatformAPI();
 			return platformApi.getTenantById(id);
 		} catch (final BonitaException e) {
-			e.printStackTrace();
+			logger.error("BonitaException", e);
+
 		}
 		return null;
 	}
@@ -117,7 +128,7 @@ public class TenantResource {
 			final PlatformAPI platformApi = platformService.getPlatformAPI();
 			return platformApi.updateTenant(id, updater);
 		} catch (final BonitaException e) {
-			e.printStackTrace();
+			logger.error("BonitaException", e);
 		}
 		return null;
 	}
@@ -127,8 +138,7 @@ public class TenantResource {
 			final PlatformAPI platformApi = platformService.getPlatformAPI();
 			platformApi.activateTenant(id);
 		} catch (final BonitaException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("BonitaException", e);
 		}
 	}
 
@@ -137,8 +147,7 @@ public class TenantResource {
 			final PlatformAPI platformApi = platformService.getPlatformAPI();
 			platformApi.deactiveTenant(id);
 		} catch (final BonitaException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("BonitaException", e);
 		}
 	}
 

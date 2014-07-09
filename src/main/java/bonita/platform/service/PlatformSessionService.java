@@ -1,13 +1,10 @@
 package bonita.platform.service;
 
 import org.bonitasoft.engine.api.PlatformLoginAPI;
-import org.bonitasoft.engine.exception.BonitaHomeNotSetException;
-import org.bonitasoft.engine.exception.ServerAPIException;
-import org.bonitasoft.engine.exception.UnknownAPITypeException;
-import org.bonitasoft.engine.platform.PlatformLoginException;
-import org.bonitasoft.engine.platform.PlatformLogoutException;
+import org.bonitasoft.engine.exception.BonitaException;
 import org.bonitasoft.engine.session.PlatformSession;
-import org.bonitasoft.engine.session.SessionNotFoundException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import restx.factory.Component;
 
@@ -19,6 +16,7 @@ public class PlatformSessionService {
 	private PlatformLoginAPI platformLoginAPI;
 	private PlatformSession platformSession;
 	private final BonitaHomeService bonitaHomeService;
+	Logger logger = LoggerFactory.getLogger(getClass());
 
 	public PlatformSessionService(BonitaHomeService bonitaHomeService) {
 		this.bonitaHomeService = bonitaHomeService;
@@ -28,23 +26,12 @@ public class PlatformSessionService {
 
 	public PlatformSession getSession() {
 		platformSession = null;
-
 		try {
 			platformLoginAPI = PlatformAPIAccessor.getPlatformLoginAPI();
 			platformSession = platformLoginAPI.login("platformAdmin",
 					"platform");
-		} catch (final BonitaHomeNotSetException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (final ServerAPIException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (final UnknownAPITypeException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (final PlatformLoginException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (final BonitaException e) {
+			logger.error("BonitaException", e);
 		}
 		return platformSession;
 	}
@@ -52,14 +39,9 @@ public class PlatformSessionService {
 	public void logout() {
 		try {
 			platformLoginAPI.logout(platformSession);
-		} catch (final PlatformLogoutException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (final SessionNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (final BonitaException e) {
+			logger.error("BonitaException", e);
 		}
-
 	}
 
 	public BonitaHomeService getBonitaHomeService() {

@@ -1,9 +1,9 @@
 package bonita.platform.service;
 
-import org.bonitasoft.engine.exception.BonitaHomeNotSetException;
-import org.bonitasoft.engine.exception.ServerAPIException;
-import org.bonitasoft.engine.exception.UnknownAPITypeException;
+import org.bonitasoft.engine.exception.BonitaException;
 import org.bonitasoft.engine.session.PlatformSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import restx.factory.Component;
 
@@ -14,6 +14,7 @@ import com.bonitasoft.engine.api.PlatformAPIAccessor;
 public class PlatformService {
 
 	private final PlatformSessionService platformSessionService;
+	Logger logger = LoggerFactory.getLogger(getClass());
 
 	public PlatformService(PlatformSessionService platformSessionService) {
 		this.platformSessionService = platformSessionService;
@@ -26,15 +27,8 @@ public class PlatformService {
 			final PlatformSession session = platformSessionService.getSession();
 			return PlatformAPIAccessor.getPlatformAPI(session);
 
-		} catch (final BonitaHomeNotSetException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (final ServerAPIException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (final UnknownAPITypeException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (final BonitaException e) {
+			logger.error("BonitaException", e);
 		}
 		return null;
 	}

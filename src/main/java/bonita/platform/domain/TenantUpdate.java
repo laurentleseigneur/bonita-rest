@@ -2,12 +2,12 @@ package bonita.platform.domain;
 
 public class TenantUpdate {
 
-	private String action;
 	private String name;
 	private String description;
 	private String userName;
 	private String password;
 	private boolean activated;
+	private String state;
 
 	public String getUserName() {
 		return userName;
@@ -109,12 +109,12 @@ public class TenantUpdate {
 		return true;
 	}
 
-	public String getAction() {
-		return action;
+	public String getState() {
+		return state;
 	}
 
-	public void setAction(String action) {
-		this.action = action;
+	public void setState(String state) {
+		this.state = state;
 	}
 
 }
