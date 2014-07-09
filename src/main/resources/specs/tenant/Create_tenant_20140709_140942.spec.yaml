@@ -1,0 +1,27 @@
+title: Create tenant 20140709 140942
+given:
+  - time: 2014-07-09T14:09:42.218+02:00
+wts:
+  - when: |
+       POST tenant
+       Cookie: RestxSession-bonita-rest={"_expires":"2014-08-08T14:09:42.218+02:00","principal":"1","sessionKey":"3897ea24-a7b8-4d21-97bb-dcedff5a165c"}; RestxSessionSignature-bonita-rest=Ps2vQmicLsd/wryvVDkkeGmArpg=
+
+        {
+            "username": "aa",
+            "description": "description"   ,
+            "activated": "true",
+             "name": "dfdfdfdfd",
+            "password": "zzzzz"   
+         
+        }
+    then: |
+        {
+          "name" : "dfdfdfdfd",
+          "description" : "description",
+          "iconName" : null,
+          "iconPath" : null,
+          "state" : "ACTIVATED",
+          "creationDate" : "2014-07-09T12:09:42.299+0000",
+          "defaultTenant" : false,
+          "id" : 16
+        }
