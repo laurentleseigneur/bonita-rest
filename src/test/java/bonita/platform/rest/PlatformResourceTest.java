@@ -5,22 +5,22 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.bonitasoft.engine.platform.Platform;
 import org.junit.Test;
 
-import bonita.platform.settings.BonitaSettings;
+import bonita.platform.service.BonitaHomeService;
+import bonita.platform.service.PlatformService;
+import bonita.platform.service.PlatformSessionService;
 
 public class PlatformResourceTest extends AbstractTest {
 	@Test
 	public void testGetPlatform() throws Exception {
 
-		final BonitaSettings settings = new BonitaSettings() {
-
-			@Override
-			public String bonitaHome() {
-				return "/home/laurent/bonita-home";
-			}
-		};
+		final BonitaHomeService bonitaHomeService = getBonitaHomeService();
+		PlatformSessionService platformSessionService = new PlatformSessionService(
+				bonitaHomeService);
+		PlatformService platformService = new PlatformService(
+				platformSessionService);
 		// given
 		final PlatformResource plateformResource = new PlatformResource(
-				settings);
+				platformService);
 
 		// when
 		final Platform plateform = plateformResource.getPlatform();
@@ -28,6 +28,6 @@ public class PlatformResourceTest extends AbstractTest {
 		// then
 		assertThat(plateform).isNotNull();
 		assertThat(plateform.getCreatedBy()).isEqualTo("platformAdmin");
-		assertThat(plateform.getVersion()).isEqualTo("6.3.1");
+		assertThat(plateform.getVersion()).isEqualTo("6.3.2");
 	}
 }

@@ -19,9 +19,8 @@ public class TenantResourceTest extends AbstractTest {
 
 	@Test
 	public void testAllTenants() throws Exception {
-		// given
-
-		final TenantResource tenantResource = new TenantResource(settings);
+		final TenantResource tenantResource = new TenantResource(
+				getPlatformService());
 
 		// when
 		final List<Tenant> allTenants = tenantResource.getAllTenants();
@@ -34,12 +33,11 @@ public class TenantResourceTest extends AbstractTest {
 	public void testCreateTenant() throws Exception {
 		// given
 
-		final TenantResource tenantResource = new TenantResource(settings);
-
 		// when
 		final String uniqueName = NAME + UUID.randomUUID();
-		final Tenant createTenant = tenantResource.createTenant(TenantCreation
-				.build(uniqueName, DESCRIPTION, USER_NAME, PASSWORD, true));
+		final Tenant createTenant = new TenantResource(getPlatformService())
+		.createTenant(TenantCreation.build(uniqueName, DESCRIPTION,
+				USER_NAME, PASSWORD, true));
 
 		// then
 		assertThat(createTenant.getName()).isEqualTo(uniqueName);
@@ -47,4 +45,5 @@ public class TenantResourceTest extends AbstractTest {
 		assertThat(createTenant.getId()).isGreaterThan(0);
 
 	}
+
 }
