@@ -60,6 +60,9 @@ public class TenantResource {
 			tenantCreator.setDefaultTenant(false);
 
 			final long createTenantId = platformApi.createTenant(tenantCreator);
+			if (tenantData.isActivated()) {
+				platformApi.activateTenant(createTenantId);
+			}
 			return platformApi.getTenantById(createTenantId);
 		} catch (final BonitaException e) {
 

@@ -30,19 +30,38 @@ public class TenantResourceTest extends AbstractTest {
 	}
 
 	@Test
-	public void testCreateTenant() throws Exception {
+	public void testCreateTenantActivated() throws Exception {
 		// given
 
 		// when
 		final String uniqueName = NAME + UUID.randomUUID();
 		final Tenant createTenant = new TenantResource(getPlatformService())
-		.createTenant(TenantCreation.build(uniqueName, DESCRIPTION,
-				USER_NAME, PASSWORD, true));
+				.createTenant(TenantCreation.build(uniqueName, DESCRIPTION,
+						USER_NAME, PASSWORD, true));
 
 		// then
 		assertThat(createTenant.getName()).isEqualTo(uniqueName);
 		assertThat(createTenant.getDescription()).isEqualTo(DESCRIPTION);
 		assertThat(createTenant.getId()).isGreaterThan(0);
+		assertThat(createTenant.getState()).isEqualTo("ACTIVATED");
+
+	}
+
+	@Test
+	public void testCreateTenantNotctivated() throws Exception {
+		// given
+
+		// when
+		final String uniqueName = NAME + UUID.randomUUID();
+		final Tenant createTenant = new TenantResource(getPlatformService())
+				.createTenant(TenantCreation.build(uniqueName, DESCRIPTION,
+						USER_NAME, PASSWORD, false));
+
+		// then
+		assertThat(createTenant.getName()).isEqualTo(uniqueName);
+		assertThat(createTenant.getDescription()).isEqualTo(DESCRIPTION);
+		assertThat(createTenant.getId()).isGreaterThan(0);
+		assertThat(createTenant.getState()).isEqualTo("DEACTIVATED");
 
 	}
 
