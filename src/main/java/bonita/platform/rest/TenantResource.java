@@ -55,7 +55,7 @@ public class TenantResource {
 			final TenantCreator tenantCreator = new TenantCreator(
 					tenantData.getName());
 			tenantCreator.setDescription(tenantData.getDescription());
-			tenantCreator.setUsername(tenantData.getUserName());
+			tenantCreator.setUsername(tenantData.getUsername());
 			tenantCreator.setPassword(tenantData.getPassword());
 			tenantCreator.setDefaultTenant(false);
 
@@ -125,7 +125,7 @@ public class TenantResource {
 		final TenantUpdater updater = new TenantUpdater();
 		updater.setDescription(tenantData.getDescription());
 		updater.setName(tenantData.getName());
-		updater.setUsername(tenantData.getUserName());
+		updater.setUsername(tenantData.getUsername());
 		updater.setPassword(tenantData.getPassword());
 		try {
 			final PlatformAPI platformApi = platformService.getPlatformAPI();
