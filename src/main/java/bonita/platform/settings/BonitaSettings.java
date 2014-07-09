@@ -6,6 +6,6 @@ import restx.config.SettingsKey;
 @Settings
 public interface BonitaSettings {
 
-	@SettingsKey(key = "bonita.home")
+	@SettingsKey(key = "bonita.restx.home")
 	String bonitaHome();
 }

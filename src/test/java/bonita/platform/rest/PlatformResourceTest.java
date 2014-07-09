@@ -28,6 +28,6 @@ public class PlatformResourceTest extends AbstractTest {
 		// then
 		assertThat(plateform).isNotNull();
 		assertThat(plateform.getCreatedBy()).isEqualTo("platformAdmin");
-		assertThat(plateform.getVersion()).isEqualTo("6.3.1");
+		assertThat(plateform.getVersion()).isEqualTo("6.3.2");
 	}
 }

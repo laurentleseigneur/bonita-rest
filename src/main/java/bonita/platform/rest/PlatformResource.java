@@ -13,6 +13,7 @@ import bonita.platform.service.PlatformService;
 
 @Component
 @RestxResource
+@PermitAll
 public class PlatformResource {
 	Logger logger = LoggerFactory.getLogger(getClass());
 	private final PlatformService platformService;
@@ -22,7 +23,6 @@ public class PlatformResource {
 	}
 
 	@GET("/platform")
-	@PermitAll
 	public Platform getPlatform() {
 		Platform platform = null;
 		try {

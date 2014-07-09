@@ -23,6 +23,7 @@ import com.bonitasoft.engine.platform.TenantUpdater;
 
 @Component
 @RestxResource
+@PermitAll
 public class TenantResource {
 	private static final String DEACTIVATE = "deactivated";
 
@@ -42,7 +43,6 @@ public class TenantResource {
 	}
 
 	@GET("/tenant")
-	@PermitAll
 	public List<Tenant> getAllTenants() {
 		return platformService.getPlatformAPI().getTenants(0,
 				Integer.MAX_VALUE, TenantCriterion.CREATION_ASC);
